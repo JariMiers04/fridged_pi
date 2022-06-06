@@ -1,0 +1,7 @@
+/.vscode
+/build
+/dist
+/__pycache__
+/hx711.egg-info
+/HX711.egg-info
+.env
