@@ -1,0 +1,41 @@
+[
+	{		
+        "id":1174457,
+        "product_number":5038,
+        "short_name":"BONI PLAT WATER 2L",
+        "long_name":"BONI plat water 2L",
+        "gross_weight":2,
+        "gross_weight_unit":"kg",
+        "category_segment":"segm-239629",
+        "segment_name":"Water Plat Gezinsverp. (>1L)",
+        "nutriscore_label":"A",
+        "barcode":"05400141420050",
+        "image":"https:\/\/static.colruyt.be\/images\/200x310\/nl_be\/34\/06\/asset-2483406.jpg"
+    },
+    {		
+        "id":2931290,
+        "product_number":35566,
+        "short_name":"ZWAN TV WORST NEW 230G",
+        "long_name":"ZWAN TV-WORSTJES NATUUR 230G",
+        "gross_weight":"0",
+        "gross_weight_unit":"kg",
+        "category_segment":"segm-12553",
+        "segment_name":"Worsten Conserv",
+        "nutriscore_label":"D",
+        "barcode":"08710604742863",
+        "image":"https:\/\/static.colruyt.be\/images\/100x100\/std.lang.all\/42\/09\/asset-354209.jpg"
+    },
+    {		
+        "id":29164,
+        "product_number":29164,
+        "short_name":"VVKKIPBORSTFILET+-800GW",
+        "long_name":"kippenborstfilet ï¿½800g",
+        "gross_weight":"0",
+        "gross_weight_unit":"kg",
+        "category_segment":"segm-12826",
+        "segment_name":"Gev. Kip Filet",
+        "nutriscore_label":"A",
+        "barcode":"05400141291643",
+        "image":"https:\/\/static.colruyt.be\/images\/320x320\/std.lang.all\/44\/85\/asset-354485.jpg"
+    }
+]
