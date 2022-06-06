@@ -14,8 +14,6 @@ import RPi.GPIO as GPIO
 from os.path import dirname, abspath
 from dotenv import load_dotenv
 
-# print(requests.get('http://192.168.0.116:80').text)
-
 headers = {"Content-Type": "application/json; charset=utf-8"}
 
 testData = {
