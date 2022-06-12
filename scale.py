@@ -5,7 +5,9 @@ import math
 import RPi.GPIO as GPIO  # import GPIO
 from hx711 import HX711  # import the class HX711
 from rgb import RGB
-rgb1 = RGB(27,22,17)
+
+rgb = RGB(19,13,26)
+
 
 class SCALE:
     weight = 0
@@ -15,6 +17,7 @@ class SCALE:
 
     def GetWeight(self):
         try:
+            rgb.Red()
             GPIO.setmode(GPIO.BCM)  # set GPIO pin mode to BCM numbering
             # Create an object hx which represents your real hx711 chip
             # Required input parameters are only 'dout_pin' and 'pd_sck_pin'
@@ -79,8 +82,7 @@ class SCALE:
                     # you have to flush, fsynch and close the file all the time.
                     # This will write the file to the drive. It is slow but safe.
             while True:
-                if math.floor(hx.get_weight_mean(20)) == 0:
-                    rgb1.OrangeFlash()
+                if math.floor(hx.get_weight_mean(20)) <= 0:
                     print(math.floor(hx.get_weight_mean(20)), 'g')
                 else:
                     print(math.floor(hx.get_weight_mean(20)), 'g')
@@ -93,4 +95,4 @@ class SCALE:
             print('Bye :)')
 
         finally:
-            GPIO.cleanup()
+            rgb.Stop()
