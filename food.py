@@ -32,6 +32,7 @@ class FOOD(object):
             'short_name': food.short_name,
             'long_name': food.long_name,
             'segment_name': food.segment_name,
+            'nutriscore_label': food.nutriscore_label,
             'barcode': food.barcode,
             'image': food.image
         }
@@ -40,6 +41,7 @@ class FOOD(object):
         sendPost = requests.post(postUrl, headers=headers, json=data)
 
         return sendPost
+
     def DeleteFood(food):
         deleteUrl = envUrl + "/food/" + food.barcode
 
@@ -47,3 +49,11 @@ class FOOD(object):
         deletePost = requests.delete(deleteUrl)
 
         return deletePost
+
+    def DeleteFoodId(id):
+         deleteUrl = envUrl + "/food/onId/" + str(id)
+
+         delete = requests.delete(deleteUrl)
+
+
+         return delete
