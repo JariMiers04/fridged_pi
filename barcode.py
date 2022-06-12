@@ -4,11 +4,12 @@ from food import FOOD
 from evdev import InputDevice, categorize, ecodes
 from rgb import RGB
 from select import select
-import time
+from datetime import datetime
+from datetime import timedelta
+
+rgb = RGB(19,13,26)
 
 jsonData = json.load(open('test.json', 'r'))
-rgb1 = RGB(27,22,17)
-
 scancodes = {
     # Scancode: ASCIICode
     0: None, 1: u'ESC', 2: u'1', 3: u'2', 4: u'3', 5: u'4', 6: u'5', 7: u'6', 8: u'7', 9: u'8',
@@ -36,76 +37,57 @@ class BARCODE:
         GPIO.setmode(GPIO.BCM)
 
     def ReadBarcode(self):
+        rgb.Green()
         dev = InputDevice("../../../../dev/input/event0")
         dev.grab()
-        state = {}
         x = '0'
         caps = False
-        # while True:
-        #     r, _, _ = select([dev], [], [], 0.5)
-        #     print("forever")
-        #     if r:
-        #         print("test")
-        #         rgb1.Stop()
-        #         for event in dev.read_loop():
-        #             if event.value == 1:
-        #                 state[event.code] = event.timestamp(), event
-        #             if event.value == 0 and event.code in state:
-        #                 del state[event.code]
-        #             if event.type == ecodes.EV_KEY:
-        #                 data = categorize(event)  # Save the event temporarily to introspect it
-        #                 if data.scancode == 42:
-        #                     if data.keystate == 1:
-        #                         caps = True
-        #                     if data.keystate == 0:
-        #                         caps = False
+        state = {}
+        endTimer = datetime.now() + timedelta(seconds = 5)
+        while True:
+            start =  datetime.now()
+            r, _, _ = select([dev], [], [], 0.5)
+            print("Looking for scan")
+            try:
+                if r:
+                    for event in dev.read_loop():
+                        if event.value == 1:
+                            state[event.code] = event.timestamp(), event
+                        if event.value == 0 and event.code in state:
+                            del state[event.code]
+                        if event.type == ecodes.EV_KEY:
+                            data = categorize(event)  # Save the event temporarily to introspect it
+                            if data.scancode == 42:
+                                if data.keystate == 1:
+                                    caps = True
+                                if data.keystate == 0:
+                                    caps = False
 
-        #                 if data.keystate == 1:  # Down events only
-        #                     if caps:
-        #                         key_lookup = u'{}'.format(capscodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
-        #                     else:
-        #                         key_lookup = u'{}'.format(scancodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
-
-
-        #                     if (data.scancode != 42) and (data.scancode != 28):
-        #                         x += key_lookup
-
-        #                     if(data.scancode == 28):
-        #                         print(x)
-        #                         for i in jsonData:
-        #                             if i['barcode'] == x:
-        #                                 objectValueData.append(i)
-        #                                 # print(FOOD.make_food(0, objectValueData.short_name, objectValueData.long_name, objectValueData.nutriscore_label, objectValueData.segment_name, self.barcode, objectValueData.image))
-        #                                 break
-        #                         print(objectValueData)
-        #                         return(x)
-        #     print("double")
-        #     rgb1.RedFlash()
-        for event in dev.read_loop():
-                if event.type == ecodes.EV_KEY:
-                    data = categorize(event)  # Save the event temporarily to introspect it
-                    if data.scancode == 42:
-                        if data.keystate == 1:
-                            caps = True
-                        if data.keystate == 0:
-                            caps = False
-
-                    if data.keystate == 1:  # Down events only
-                        if caps:
-                            key_lookup = u'{}'.format(capscodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
-                        else:
-                            key_lookup = u'{}'.format(scancodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
+                            if data.keystate == 1:  # Down events only
+                                if caps:
+                                    key_lookup = u'{}'.format(capscodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
+                                else:
+                                    key_lookup = u'{}'.format(scancodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
 
 
-                        if (data.scancode != 42) and (data.scancode != 28):
-                            x += key_lookup
+                                if (data.scancode != 42) and (data.scancode != 28):
+                                    x += key_lookup
 
-                        if(data.scancode == 28):
-                            print(x)
-                            for i in jsonData:
-                                if i['barcode'] == x:
-                                    self.objectValueData.append(i)
-                                    # print(FOOD.make_food(0, objectValueData.short_name, objectValueData.long_name, objectValueData.nutriscore_label, objectValueData.segment_name, self.barcode, objectValueData.image))
-                                    break
-                            return(self.objectValueData)
-                
+                                if(data.scancode == 28):
+                                    print(x)
+                                    for i in jsonData:
+                                        if i['barcode'] == x:
+                                            self.objectValueData.append(i)
+                                            break
+                                    return(self.objectValueData)
+                if start >= endTimer:
+                    print("Nothing scanned check again")
+                    rgb.Green()
+                    if len(self.objectValueData) > 0:
+                        self.objectValueData.pop()
+                    return(self.objectValueData)
+
+            except(KeyboardInterrupt,SystemExit):
+                GPIO.cleanup()
+            finally:
+                rgb.Stop()
