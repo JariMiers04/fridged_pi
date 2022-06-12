@@ -51,6 +51,8 @@ class RGB:
         GPIO.output(self.blue, GPIO.HIGH)
 
     def WhiteFlash(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.output(self.red, GPIO.HIGH)
         GPIO.output(self.green, GPIO.HIGH)
         GPIO.output(self.blue, GPIO.HIGH)
@@ -60,20 +62,7 @@ class RGB:
         GPIO.output(self.blue, GPIO.LOW)
         time.sleep(0.5)
 
-    def Orange(self):
-        GPIO.output(self.red, GPIO.HIGH)
-        GPIO.output(self.green, GPIO.HIGH)
-        GPIO.output(self.blue, GPIO.LOW)
-
-    def OrangeFlash(self):
-        GPIO.output(self.red, GPIO.HIGH)
-        GPIO.output(self.green, GPIO.HIGH)
-        GPIO.output(self.blue, GPIO.LOW)
-        time.sleep(0.5)
+    def Stop(self):
         GPIO.output(self.red, GPIO.LOW)
         GPIO.output(self.green, GPIO.LOW)
         GPIO.output(self.blue, GPIO.LOW)
-        time.sleep(0.5)
-
-    def Stop(self):
-        GPIO.cleanup()
