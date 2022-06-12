@@ -37,5 +37,18 @@
         "nutriscore_label":"A",
         "barcode":"05400141291643",
         "image":"https:\/\/static.colruyt.be\/images\/320x320\/std.lang.all\/44\/85\/asset-354485.jpg"
-    }
+    },
+    {		
+        "id":4066699,
+        "product_number":1599,
+        "short_name":"BONI HV MELK 50CL",
+        "long_name":"BONI halfvolle melk PET 50cl",
+        "gross_weight":1,
+        "gross_weight_unit":"kg",
+        "category_segment":"segm-11762",
+        "segment_name":"Melk Halfvol",
+        "nutriscore_label":"A",
+        "barcode":"05400141269512",
+        "image":"https:\/\/static.colruyt.be\/images\/200x310\/nl_be\/36\/26\/asset-2143626.jpg"
+        }
 ]
